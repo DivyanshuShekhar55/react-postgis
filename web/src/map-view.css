@@ -1,0 +1,11 @@
+.map__main {
+  height: 50vh;
+  width: 50vw;
+  border: 2px solid #4a90e2;
+}
+
+.leaflet-custom {
+  background: #f6fbff;
+  height: 100%;
+  width: 100%;
+}
