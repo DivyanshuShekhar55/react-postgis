@@ -1,7 +1,21 @@
 import React from 'react'
-import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
+import { MapContainer, TileLayer, useMap, Marker, Popup,Polygon } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import './map-view.css'
+const multiPolygon = [
+  [
+    [51.51, -0.12],
+    [51.51, -0.13],
+    [51.53, -0.13],
+  ],
+  [
+    [51.51, -0.05],
+    [51.51, -0.07],
+    [51.53, -0.07],
+  ],
+]
+
+const purpleOptions = { color: 'purple' }
 
 function MapView() {
     const position = [51.505, -0.09]
@@ -17,6 +31,8 @@ function MapView() {
                         A pretty CSS3 popup. <br /> Easily customizable.
                     </Popup>
                 </Marker>
+
+                <Polygon pathOptions={purpleOptions} positions={multiPolygon} />
             </MapContainer>
         </div>
     )
