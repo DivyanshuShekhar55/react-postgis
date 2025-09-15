@@ -17,11 +17,12 @@ func main() {
 
 	ctx := context.Background()
 
-	conn, err := pgx.Connect(ctx, pg_conn_str)
+	db, err := pgx.Connect(ctx, pg_conn_str)
 	if err != nil {
-		fmt.Printf("couldn't connect to pg %s", err)
-		return
+		panic(err)
 	}
 
-	defer conn.Close(ctx)
+	defer db.Close(ctx)
+
+	
 }
