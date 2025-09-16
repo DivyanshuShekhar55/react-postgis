@@ -24,6 +24,7 @@ type config struct {
 
 type Application struct {
 	conf config
+	mux  *http.ServeMux
 }
 
 func main() {
@@ -54,12 +55,18 @@ func main() {
 		env:  env,
 	}
 
-	app := Application{
+	mux := http.NewServeMux()
+
+	app := &Application{
 		conf: conf,
+		mux:  mux,
 	}
+
+	app.mux.HandleFunc("POST /location", app.InsertLocation)
 
 	srv := http.Server{
 		Addr:         app.conf.addr,
+		Handler:      app.mux,
 		IdleTimeout:  time.Second * 30,
 		WriteTimeout: time.Second * 60,
 		ReadTimeout:  time.Second * 30,
