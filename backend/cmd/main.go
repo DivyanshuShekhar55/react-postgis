@@ -14,6 +14,7 @@ type dbconfig struct {
 	conn *pgx.Conn
 	// maybe define some max conections (active/idle)
 	// but abhi ke liye itna hi kaafi hai
+	dbImpl dbImpl
 }
 
 type config struct {
@@ -25,6 +26,10 @@ type config struct {
 type Application struct {
 	conf config
 	mux  *http.ServeMux
+}
+
+type dbImpl interface {
+	GetAllPolygons(w http.ResponseWriter, r *http.Request)
 }
 
 func main() {
@@ -46,7 +51,8 @@ func main() {
 	defer db.Close(ctx)
 
 	pg := dbconfig{
-		conn: db,
+		conn:   db,
+		dbImpl: NewDbImpl(db),
 	}
 
 	conf := config{
@@ -62,7 +68,7 @@ func main() {
 		mux:  mux,
 	}
 
-	app.mux.HandleFunc("POST /location", app.InsertLocation)
+	app.mux.HandleFunc("POST /location", app.conf.db.dbImpl.GetAllPolygons)
 
 	srv := http.Server{
 		Addr:         app.conf.addr,
