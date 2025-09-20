@@ -30,5 +30,5 @@ func (app *Application) InsertLocation(w http.ResponseWriter, r *http.Request) {
 }
 
 func (db *DbImpl) GetAllPolygons(w http.ResponseWriter, r *http.Request){
-	 pg.GetAllPolygons()
+	 pg.GetAllPolygons(r.Context(), db.conn)
 }
