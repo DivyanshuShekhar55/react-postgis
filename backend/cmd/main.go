@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/jackc/pgx/v5"
+	"github.com/joho/godotenv"
 )
 
 type dbconfig struct {
@@ -33,6 +34,12 @@ type dbImpl interface {
 }
 
 func main() {
+	fmt.Println("Starting backend server...")
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Println("Error loading .env file")
+		return
+	}
 	pg_conn_str := os.Getenv("PG_CONN")
 	env := os.Getenv("ENV")
 
@@ -68,6 +75,7 @@ func main() {
 		mux:  mux,
 	}
 
+	app.mux.HandleFunc("GET /", healthCheck)
 	app.mux.HandleFunc("POST /location", app.conf.db.dbImpl.GetAllPolygons)
 
 	srv := http.Server{
