@@ -6,13 +6,12 @@ import (
 	"fmt"
 
 	"github.com/jackc/pgx/v5"
-	geom "github.com/twpayne/go-geom"
 )
 
 type PolygonRow struct {
-	id   int64
-	name string
-	geom *geom.Polygon
+	Id   int64          `json:"id"`
+	Name string         `json:"name"`
+	Geom GeoJSONPolygon `json:"geom"`
 }
 
 type GeoJSONPolygon struct {
@@ -42,7 +41,7 @@ func GetAllPolygons(ctx context.Context, conn *pgx.Conn) (res []PolygonRow, err 
 
 		// see if all fields are proper
 		if err := rows.Scan(&id, &name, &geo_json_str); err != nil {
-			return nil, fmt.Errorf("couldn't get errors %s", err)
+			return nil, fmt.Errorf("couldn't get row %s", err)
 		}
 
 		// fir bas unmarshal karke geostr ko json mein convert kardo
@@ -51,25 +50,14 @@ func GetAllPolygons(ctx context.Context, conn *pgx.Conn) (res []PolygonRow, err 
 			return nil, fmt.Errorf("polygon unmarshal error %s", err)
 		}
 
-		// abhi flatten all coordinates inside the geojson item
-		poly := geom.NewPolygon(geom.XY)
-		for _, ring := range geojsonitem.Coordinates {
-			flat := make([]float64, 0, len(ring)*2)
-			for _, pt := range ring {
-				flat = append(flat, pt[0], pt[1])
-			}
-			linear_ring := geom.NewLinearRingFlat(geom.XY, flat)
-			poly.Push(linear_ring)
-		}
-
 		res = append(res, PolygonRow{
-			id:   id,
-			name: name,
-			geom: poly,
+			Id:   id,
+			Name: name,
+			Geom: geojsonitem,
 		})
 
 	}
-
+	
 	return res, rows.Err()
 
 }

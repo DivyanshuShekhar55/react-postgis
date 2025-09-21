@@ -76,7 +76,7 @@ func main() {
 	}
 
 	app.mux.HandleFunc("GET /", healthCheck)
-	app.mux.HandleFunc("POST /location", app.conf.db.dbImpl.GetAllPolygons)
+	app.mux.HandleFunc("GET /location", app.conf.db.dbImpl.GetAllPolygons)
 
 	srv := http.Server{
 		Addr:         app.conf.addr,
