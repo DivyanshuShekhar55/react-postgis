@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/DivyanshuShekhar55/backend/internal/pg"
@@ -26,7 +27,22 @@ func NewDbImpl(conn *pgx.Conn) *DbImpl {
 // 	geoPoints []point
 // }
 
-func (app *Application) InsertLocation(w http.ResponseWriter, r *http.Request) {
+func (db *DbImpl) InsertLocation(w http.ResponseWriter, r *http.Request) {
+	var req pg.InsertBody
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, "error unmarshalling req", http.StatusBadRequest)
+		fmt.Printf("error unmarshaliing insert location req %s", err)
+		return
+	}
+
+	err := pg.Insert(r.Context(), db.conn, req)
+	if err != nil {
+		http.Error(w, "error inserting data", http.StatusInternalServerError)
+		fmt.Printf("error : %s", err.Error())
+	}
+
+	w.WriteHeader(http.StatusCreated)
+	w.Write([]byte("ok"))
 
 }
 
@@ -42,6 +58,5 @@ func (db *DbImpl) GetAllPolygons(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	
 
 }
