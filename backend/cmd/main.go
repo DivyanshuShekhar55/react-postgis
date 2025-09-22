@@ -31,6 +31,7 @@ type Application struct {
 
 type dbImpl interface {
 	GetAllPolygons(w http.ResponseWriter, r *http.Request)
+	InsertPolygon(w http.ResponseWriter, r *http.Request)
 }
 
 func main() {
@@ -77,6 +78,7 @@ func main() {
 
 	app.mux.HandleFunc("GET /", healthCheck)
 	app.mux.HandleFunc("GET /location", app.conf.db.dbImpl.GetAllPolygons)
+	app.mux.HandleFunc("POST /location", app.conf.db.dbImpl.InsertPolygon)
 
 	srv := http.Server{
 		Addr:         app.conf.addr,

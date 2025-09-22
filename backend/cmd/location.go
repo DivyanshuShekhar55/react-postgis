@@ -27,7 +27,7 @@ func NewDbImpl(conn *pgx.Conn) *DbImpl {
 // 	geoPoints []point
 // }
 
-func (db *DbImpl) InsertLocation(w http.ResponseWriter, r *http.Request) {
+func (db *DbImpl) InsertPolygon(w http.ResponseWriter, r *http.Request) {
 	var req pg.InsertBody
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, "error unmarshalling req", http.StatusBadRequest)
@@ -39,6 +39,7 @@ func (db *DbImpl) InsertLocation(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, "error inserting data", http.StatusInternalServerError)
 		fmt.Printf("error : %s", err.Error())
+		return
 	}
 
 	w.WriteHeader(http.StatusCreated)

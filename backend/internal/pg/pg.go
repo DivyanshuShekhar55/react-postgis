@@ -64,10 +64,13 @@ func GetAllPolygons(ctx context.Context, conn *pgx.Conn) (res []PolygonRow, err 
 }
 
 func Insert(ctx context.Context, conn *pgx.Conn, body InsertBody) error {
-	query := `INSERT INTO polygons (name, geom) VALUES ($1, ST_GeomFromGeJSON($2))`
+	query := `INSERT INTO polygons (name, geom) VALUES ($1, ST_GeomFromGeoJSON($2))`
 
 	geo_json_struct := GeoJSONPolygon{
 		Type:        "Polygon",
+
+		// abhi ke liye we take [][] matrix of coords and convert to [][][]
+		// baad mein agar multipolygons input lene ho toh change here
 		Coordinates: [][][]float64{body.PolyPoints},
 	}
 
