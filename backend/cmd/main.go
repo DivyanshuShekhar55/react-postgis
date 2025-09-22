@@ -80,9 +80,12 @@ func main() {
 	app.mux.HandleFunc("GET /location", app.conf.db.dbImpl.GetAllPolygons)
 	app.mux.HandleFunc("POST /location", app.conf.db.dbImpl.InsertPolygon)
 
+	// wrap kardo mux ko with cors
+	handler := withCORS(mux)
+
 	srv := http.Server{
 		Addr:         app.conf.addr,
-		Handler:      app.mux,
+		Handler:      handler,
 		IdleTimeout:  time.Second * 30,
 		WriteTimeout: time.Second * 60,
 		ReadTimeout:  time.Second * 30,
