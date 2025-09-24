@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type PolygonRow struct {
@@ -24,9 +24,9 @@ type InsertBody struct {
 	PolyPoints [][]float64 `json:"poly_points"`
 }
 
-func GetAllPolygons(ctx context.Context, conn *pgx.Conn) (res []PolygonRow, err error) {
+func GetAllPolygons(ctx context.Context, pool *pgxpool.Pool) (res []PolygonRow, err error) {
 	query := `SELECT id, name, ST_AsGeoJson(geom) FROM polygons`
-	rows, err := conn.Query(ctx, query)
+	rows, err := pool.Query(ctx, query)
 
 	if err != nil {
 		fmt.Printf("error while fetching polygons %s", err)
@@ -63,11 +63,11 @@ func GetAllPolygons(ctx context.Context, conn *pgx.Conn) (res []PolygonRow, err 
 
 }
 
-func Insert(ctx context.Context, conn *pgx.Conn, body InsertBody) error {
+func Insert(ctx context.Context, pool *pgxpool.Pool, body InsertBody) error {
 	query := `INSERT INTO polygons (name, geom) VALUES ($1, ST_GeomFromGeoJSON($2))`
 
 	geo_json_struct := GeoJSONPolygon{
-		Type:        "Polygon",
+		Type: "Polygon",
 
 		// abhi ke liye we take [][] matrix of coords and convert to [][][]
 		// baad mein agar multipolygons input lene ho toh change here
@@ -81,7 +81,7 @@ func Insert(ctx context.Context, conn *pgx.Conn, body InsertBody) error {
 
 	geo_json_str := string(geo_json_byte)
 
-	_, err = conn.Exec(ctx, query, body.Name, geo_json_str)
+	_, err = pool.Exec(ctx, query, body.Name, geo_json_str)
 	if err != nil {
 		return fmt.Errorf("error inserting data %s", err)
 	}

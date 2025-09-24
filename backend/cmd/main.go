@@ -3,16 +3,17 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"time"
 
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/joho/godotenv"
 )
 
 type dbconfig struct {
-	conn *pgx.Conn
+	pool *pgxpool.Pool
 	// maybe define some max conections (active/idle)
 	// but abhi ke liye itna hi kaafi hai
 	dbImpl dbImpl
@@ -51,16 +52,22 @@ func main() {
 
 	ctx := context.Background()
 
-	db, err := pgx.Connect(ctx, pg_conn_str)
-	if err != nil {
-		panic(err)
-	}
+	// db, err := pgx.Connect(ctx, pg_conn_str)
+	// if err != nil {
+	// 	panic(err)
+	// }
 
-	defer db.Close(ctx)
+	// defer db.Close(ctx)
+
+	pool, err := pgxpool.New(ctx, pg_conn_str)
+	if err!= nil {
+		log.Fatalf("couldn't connect to db err : %s", err)
+	}
+	defer pool.Close()
 
 	pg := dbconfig{
-		conn:   db,
-		dbImpl: NewDbImpl(db),
+		pool:   pool,
+		dbImpl: NewDbImpl(pool),
 	}
 
 	conf := config{

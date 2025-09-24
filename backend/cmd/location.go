@@ -6,15 +6,15 @@ import (
 	"net/http"
 
 	"github.com/DivyanshuShekhar55/backend/internal/pg"
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type DbImpl struct {
-	conn *pgx.Conn
+	pool *pgxpool.Pool
 }
 
-func NewDbImpl(conn *pgx.Conn) *DbImpl {
-	return &DbImpl{conn: conn}
+func NewDbImpl(pool *pgxpool.Pool) *DbImpl {
+	return &DbImpl{pool: pool}
 }
 
 // type point struct {
@@ -35,7 +35,7 @@ func (db *DbImpl) InsertPolygon(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := pg.Insert(r.Context(), db.conn, req)
+	err := pg.Insert(r.Context(), db.pool, req)
 	if err != nil {
 		http.Error(w, "error inserting data", http.StatusInternalServerError)
 		fmt.Printf("error : %s", err.Error())
@@ -48,7 +48,7 @@ func (db *DbImpl) InsertPolygon(w http.ResponseWriter, r *http.Request) {
 }
 
 func (db *DbImpl) GetAllPolygons(w http.ResponseWriter, r *http.Request) {
-	res, err := pg.GetAllPolygons(r.Context(), db.conn)
+	res, err := pg.GetAllPolygons(r.Context(), db.pool)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
