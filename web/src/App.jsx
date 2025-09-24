@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import MapView from './MapView'
+import DataInsertionComponent from './DataInsertionComponent'
 
 
 function App() {
@@ -27,7 +28,11 @@ function App() {
   
 
   return (
+    <>
+    
+    <DataInsertionComponent />
     <MapView polys={poly}/>
+    </>
   )
 }
 
