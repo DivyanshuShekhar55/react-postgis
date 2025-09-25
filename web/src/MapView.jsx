@@ -8,6 +8,8 @@ const purpleOptions = { color: 'purple' };
 function MapView() {
   const [poly, setPoly] = useState([])
   const [mapData, setMapData] = useState([])
+  // map data iss tarah ka hai :
+  // [ {id:1, name: "", coords : [[lat1, long1], [lat2, long2]]}, {...} ]
 
   useEffect(() => {
     const polys = fetch('http://localhost:6969/location')
@@ -40,7 +42,11 @@ function MapView() {
 
         {mapData.map((item, idx) => (
           <Polygon key={idx} pathOptions={purpleOptions} positions={item.coords} >
-            <Popup>Polygon {item.name}</Popup>
+            <Marker position={item.coords[0]}>
+              <Popup>
+                <b>{item.id}</b> <br/>{item.name}
+              </Popup>
+            </Marker>
           </Polygon>
         ))}
       </MapContainer>
