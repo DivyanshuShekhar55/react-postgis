@@ -48,6 +48,7 @@ func (db *DbImpl) InsertPolygon(w http.ResponseWriter, r *http.Request) {
 }
 
 func (db *DbImpl) GetAllPolygons(w http.ResponseWriter, r *http.Request) {
+	var res []pg.PolygonRow
 	res, err := pg.GetAllPolygons(r.Context(), db.pool)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

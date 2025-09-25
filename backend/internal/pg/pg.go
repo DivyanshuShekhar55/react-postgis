@@ -8,10 +8,16 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
+type Point struct {
+	Type        string     `json:"type"`
+	Coordinates [2]float64 `json:"coordinates"`
+}
+
 type PolygonRow struct {
-	Id   int64          `json:"id"`
-	Name string         `json:"name"`
-	Geom GeoJSONPolygon `json:"geom"`
+	Id     int64          `json:"id"`
+	Name   string         `json:"name"`
+	Geom   GeoJSONPolygon `json:"geom"`
+	Center Point          `json:"center"`
 }
 
 type GeoJSONPolygon struct {
@@ -25,7 +31,7 @@ type InsertBody struct {
 }
 
 func GetAllPolygons(ctx context.Context, pool *pgxpool.Pool) (res []PolygonRow, err error) {
-	query := `SELECT id, name, ST_AsGeoJson(geom) FROM polygons`
+	query := `SELECT id, name, ST_AsGeoJson(geom), ST_AsGeoJSON(ST_Centroid(geom)) FROM polygons`
 	rows, err := pool.Query(ctx, query)
 
 	if err != nil {
@@ -39,9 +45,10 @@ func GetAllPolygons(ctx context.Context, pool *pgxpool.Pool) (res []PolygonRow, 
 		var id int64
 		var name string
 		var geo_json_str string
+		var center_geo_json_str string
 
 		// see if all fields are proper
-		if err := rows.Scan(&id, &name, &geo_json_str); err != nil {
+		if err := rows.Scan(&id, &name, &geo_json_str, &center_geo_json_str); err != nil {
 			return nil, fmt.Errorf("couldn't get row %s", err)
 		}
 
@@ -51,10 +58,17 @@ func GetAllPolygons(ctx context.Context, pool *pgxpool.Pool) (res []PolygonRow, 
 			return nil, fmt.Errorf("polygon unmarshal error %s", err)
 		}
 
+		// center point ko bhi unmarshal
+		var center_geo_json_item Point
+		if err = json.Unmarshal([]byte(center_geo_json_str), &center_geo_json_item); err != nil {
+			return nil, fmt.Errorf("couldn't unmarsahl center point err: %s", err)
+		}
+
 		res = append(res, PolygonRow{
-			Id:   id,
-			Name: name,
-			Geom: geojsonitem,
+			Id:     id,
+			Name:   name,
+			Geom:   geojsonitem,
+			Center: center_geo_json_item,
 		})
 
 	}
