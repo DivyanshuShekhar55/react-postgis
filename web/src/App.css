@@ -1,42 +1,109 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* App shell layout */
+.app__shell {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.app__nav {
+  width: 200px;
+  background: #f9fafb;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.app__nav__header {
+  padding: 20px 16px;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-.card {
-  padding: 2em;
+.app__nav__logo {
+  font-weight: 600;
+  font-size: 18px;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.read-the-docs {
-  color: #888;
+.app__nav__logo-badge {
+  background: #d4fc79;
+  color: #1f2937;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.app__nav ul {
+  list-style: none;
+  padding: 12px 0;
+  margin: 0;
+  flex: 1;
+}
+
+.app__nav li {
+  margin: 4px 0;
+}
+
+.app__nav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  color: #6b7280;
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.15s;
+}
+
+.app__nav a:hover,
+.app__nav a.active {
+  background: #d4fc79;
+  color: #111827;
+  font-weight: 500;
+}
+
+.app__nav a::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  background-size: contain;
+  opacity: 0.6;
+}
+
+.app__nav a:hover::before,
+.app__nav a.active::before {
+  opacity: 1;
+}
+
+.app__content {
+  flex: 1;
+  background: #f3f4f6;
+  overflow: hidden;
+  position: relative;
+}
+
+.app__content--fullscreen {
+  padding: 0;
+}
+
+.app__content--padded {
+  padding: 20px;
+  overflow: auto;
 }

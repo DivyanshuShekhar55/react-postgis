@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polygon } from 'react-leaflet';
+import { useNavigate } from 'react-router-dom'
 import 'leaflet/dist/leaflet.css';
 import './map-view.css';
 
 const purpleOptions = { color: 'purple' };
 
 function MapView() {
+  const navigate = useNavigate()
   const [poly, setPoly] = useState([])
   const [mapData, setMapData] = useState([])
   // map data iss tarah ka hai :
@@ -45,9 +47,20 @@ function MapView() {
 
         {mapData.map((item, idx) => (
           <Polygon key={idx} pathOptions={purpleOptions} positions={item.coords} >
-            <Marker position={item.center}>
+            <Marker position={item.center} eventHandlers={{
+              click: ()=> {
+                console.log("marker at ", item.center)
+              }
+            }}>
               <Popup>
-                <b>{item.id}</b> <br/>{item.name}
+                <div>
+                  <div style={{ fontWeight: 700 }}>{item.name}</div>
+                  <div style={{ marginTop: 6 }}>
+                    <button onClick={() => navigate(`/community/${item.id}`)}>
+                      View Details
+                    </button>
+                  </div>
+                </div>
               </Popup>
             </Marker>
           </Polygon>
