@@ -79,28 +79,22 @@
   font-weight: 500;
 }
 
-.app__nav a::before {
-  content: '';
-  width: 16px;
-  height: 16px;
-  background-size: contain;
-  opacity: 0.6;
-}
-
-.app__nav a:hover::before,
-.app__nav a.active::before {
-  opacity: 1;
+.nav-icon {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
 }
 
 .app__content {
   flex: 1;
-  background: #f3f4f6;
+  background: #1a1625;
   overflow: hidden;
   position: relative;
 }
 
 .app__content--fullscreen {
-  padding: 0;
+  padding: 16px;
 }
 
 .app__content--padded {

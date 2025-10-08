@@ -1,0 +1,406 @@
+.community-details {
+  max-width: 1400px;
+  margin: 0 auto;
+  background: #ffffff;
+}
+
+.community-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  font-size: 18px;
+  color: #6b7280;
+}
+
+/* Header with Map */
+.community-header {
+  position: relative;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.community-back {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 1000;
+  background: #111827;
+  color: #ffffff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s;
+}
+
+.community-back:hover {
+  background: #1f2937;
+  transform: translateY(-1px);
+}
+
+.community-map {
+  height: 350px;
+  width: 100%;
+}
+
+.community-map-container {
+  height: 100%;
+  width: 100%;
+}
+
+/* Community Info */
+.community-info {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.community-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.community-name {
+  font-size: 32px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 8px 0;
+}
+
+.community-location {
+  font-size: 16px;
+  color: #6b7280;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.community-type-badge {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Stats Section */
+.community-stats {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 24px 0;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.stat-card {
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  border: none;
+}
+
+.stat-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: #6b7280;
+}
+
+.stat-title {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value-large {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 4px;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.stat-sublabel {
+  font-size: 14px;
+  color: #6b7280;
+  display: inline-block;
+}
+
+/* Rainfall Graph */
+.rainfall-card {
+  grid-column: span 1;
+  margin-bottom: 24px;
+  max-width: 600px;
+}
+
+.rainfall-graph {
+  margin-top: 8px;
+}
+
+.rainfall-bar-bg {
+  position: relative;
+  height: 28px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: visible;
+  margin-bottom: 8px;
+}
+
+.rainfall-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+  transition: width 0.8s ease;
+  position: relative;
+}
+
+.rainfall-value {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.rainfall-average-marker {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateX(-50%);
+}
+
+.marker-line {
+  width: 2px;
+  height: 28px;
+  background: #ef4444;
+  position: relative;
+}
+
+.marker-line::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  background: #ef4444;
+  border-radius: 50%;
+}
+
+.marker-label {
+  position: absolute;
+  top: -24px;
+  background: #ef4444;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.rainfall-scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 4px;
+}
+
+/* Government Schemes Table */
+.community-schemes {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.schemes-table {
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.schemes-header {
+  display: grid;
+  grid-template-columns: 120px 2fr 140px 100px 100px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.scheme-row {
+  display: grid;
+  grid-template-columns: 120px 2fr 140px 100px 100px;
+  border-bottom: 1px solid #e5e7eb;
+  transition: background 0.15s;
+}
+
+.scheme-row:last-child {
+  border-bottom: none;
+}
+
+.scheme-row:hover {
+  background: #f9fafb;
+}
+
+.scheme-col {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.scheme-col-code {
+  padding-left: 20px;
+}
+
+.scheme-col-link {
+  justify-content: center;
+}
+
+.scheme-code {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.scheme-name-text {
+  font-size: 14px;
+  color: #111827;
+  font-weight: 500;
+}
+
+.scheme-budget-text {
+  font-size: 14px;
+  color: #111827;
+  font-weight: 600;
+}
+
+/* Priority Badges */
+.priority-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.priority-high {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.priority-medium {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.priority-low {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+/* Scheme Link */
+.scheme-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #3b82f6;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: color 0.15s;
+}
+
+.scheme-link:hover {
+  color: #2563eb;
+}
+
+.scheme-link svg {
+  flex-shrink: 0;
+}
+
+.scheme-link-na {
+  color: #d1d5db;
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rainfall-card {
+    grid-column: span 1;
+  }
+
+  .schemes-header,
+  .scheme-row {
+    grid-template-columns: 100px 1.5fr 120px 90px 80px;
+    font-size: 11px;
+  }
+
+  .scheme-col {
+    padding: 12px 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .community-name {
+    font-size: 24px;
+  }
+
+  .community-info-header {
+    flex-direction: column;
+  }
+
+  .schemes-table {
+    overflow-x: auto;
+  }
+
+  .schemes-header,
+  .scheme-row {
+    min-width: 700px;
+  }
+}

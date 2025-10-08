@@ -5,6 +5,9 @@ import DataInsertionComponent from './DataInsertionComponent'
 import CommunityDetails from './CommunityDetails'
 import HandleConflicts from './HandleConflicts'
 import Dashboard from './Dashboard'
+import mapIcon from "./assets/map-outline.svg"
+import analyticsIcon from "./assets/analytics-outline.svg"
+import buildIcon from "./assets/build-outline.svg"
 
 function App() {
   return (
@@ -20,17 +23,17 @@ function App() {
           <ul>
             <li>
               <NavLink to="/dashboard" className={({ isActive }) => isActive ? 'active' : ''}>
-                📊 Dashboard
+                <img src={analyticsIcon} alt="" className="nav-icon" /> Dashboard
               </NavLink>
             </li>
             <li>
               <NavLink to="/" end className={({ isActive }) => isActive ? 'active' : ''}>
-                🗺️ Map
+                <img src={mapIcon} alt="" className="nav-icon" /> Map
               </NavLink>
             </li>
             <li>
               <NavLink to="/handle-conflicts" className={({ isActive }) => isActive ? 'active' : ''}>
-                ⚠️ Handle Conflicts
+                <img src={buildIcon} alt="" className="nav-icon" /> Handle Conflicts
               </NavLink>
             </li>
           </ul>

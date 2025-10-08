@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import 'leaflet/dist/leaflet.css';
 import './map-view.css';
 
-const purpleOptions = { color: 'purple' };
+const purpleOptions = { color: '#7303c0', fillOpacity: 0.2 };
 
 function MapView() {
   const navigate = useNavigate()
